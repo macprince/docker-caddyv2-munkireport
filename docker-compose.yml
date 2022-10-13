@@ -1,0 +1,41 @@
+version: '3.8'
+networks:
+    web:
+        external: true
+services:
+    munkireport:
+        image: ghcr.io/munkireport/munkireport-php:v5.7.1
+        container_name: munkireport
+        env_file:
+            - ./munkireport/munkireport.env
+        volumes:
+            - ./munkireport/modules:/var/munkireport/custom-modules
+            - ./munkireport/local:/var/munkireport/local
+            - ./munkireport/logs:/var/munkireport/storage/logs
+        depends_on:
+            - mrdb
+            - caddy
+        restart: always
+    mrdb:
+        image: "mysql/mysql-server:5.7"
+        container_name: mrdb
+        env_file:
+            - ./mrdb/mrdb.env
+        volumes:
+            - ./mrdb/mysql:/var/lib/mysql
+            - ./mrdb/import:/docker-entrypoint-initdb.d
+        ports:
+            - "3306:3306"
+        restart: always
+    caddy:
+        image: "caddy"
+        container_name: caddy
+        volumes:
+            - ./web:/web
+            - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+            - ./caddy/data:/data
+            - ./caddy/config:/config
+        ports:
+            - "80:80"
+            - "443:443"
+        restart: always

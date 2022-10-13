@@ -1,0 +1,25 @@
+http://munki.example.com {
+	handle_path /mds/* {
+		root * /web/mds/
+		file_server
+	}
+}
+
+munki.example.com {
+    tls TLSEMAILADDRESSGOESHERE
+	header / {
+		 Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+	}
+	redir /munkireport /munkireport/
+	handle_path /munkireport/* {
+		reverse_proxy munkireport:80
+	}
+	root * /web/
+	handle {
+		file_server
+	}
+	basicauth /munki_repo/* {
+		munki HASHEDMUNKIREPOPASSWORDGOESHERE
+	}
+}
+
