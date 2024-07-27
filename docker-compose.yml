@@ -31,8 +31,8 @@ services:
         image: "caddy"
         container_name: caddy
         volumes:
-            - ./web:/web
-            - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+            - ./web:/web:ro
+            - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
             - ./caddy/data:/data
             - ./caddy/config:/config
         ports:
