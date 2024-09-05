@@ -4,7 +4,7 @@ networks:
         external: true
 services:
     munkireport:
-        image: ghcr.io/munkireport/munkireport-php:v5.7.1
+        image: ghcr.io/munkireport/munkireport-php:5.x
         container_name: munkireport
         env_file:
             - ./munkireport/munkireport.env
