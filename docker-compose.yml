@@ -12,6 +12,7 @@ services:
             - ./munkireport/modules:/var/munkireport/custom-modules
             - ./munkireport/local:/var/munkireport/local
             - ./munkireport/logs:/var/munkireport/storage/logs
+            - ./munkireport/php_override.ini:/usr/local/etc/php/conf.d/php_override.ini:ro
         depends_on:
             - mrdb
             - caddy
